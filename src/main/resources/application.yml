@@ -1,0 +1,11 @@
+logging:
+  level:
+    org.springframework.data.mongodb.core.ReactiveMongoTemplate: DEBUG
+#    io.r2dbc.h2.QUERY: DEBUG
+#    io.r2dbc.h2.PARAM: DEBUG
+#    io.r2dbc: DEBUG
+
+spring:
+  data.mongodb.auto-index-creation: true
+  r2dbc.initialization-mode: always
+  mongodb.embedded.version: 3.5.5

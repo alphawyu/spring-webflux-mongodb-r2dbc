@@ -1,10 +1,10 @@
 package helpers
 
-import com.realworld.springmongo.dto.User
-import com.realworld.springmongo.dto.request.UpdateUserRequest
-import com.realworld.springmongo.dto.request.UserAuthenticationRequest
-import com.realworld.springmongo.dto.request.UserRegistrationRequest
-import com.realworld.springmongo.service.user.PasswordService
+import com.realworld.spring.webflux.dto.User
+import com.realworld.spring.webflux.dto.request.UpdateUserRequest
+import com.realworld.spring.webflux.dto.request.UserAuthenticationRequest
+import com.realworld.spring.webflux.dto.request.UserRegistrationRequest
+import com.realworld.spring.webflux.service.user.PasswordService
 import java.util.*
 
 

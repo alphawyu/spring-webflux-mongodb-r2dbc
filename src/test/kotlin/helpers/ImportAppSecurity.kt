@@ -1,9 +1,9 @@
 package helpers
 
-import com.realworld.springmongo.security.JwtConfig
-import com.realworld.springmongo.security.JwtSigner
-import com.realworld.springmongo.security.SecurityConfig
-import com.realworld.springmongo.security.TokenFormatter
+import com.realworld.spring.webflux.security.JwtConfig
+import com.realworld.spring.webflux.security.JwtSigner
+import com.realworld.spring.webflux.security.SecurityConfig
+import com.realworld.spring.webflux.security.TokenFormatter
 import org.springframework.context.annotation.Import
 
 @Import(SecurityConfig::class, TokenFormatter::class, JwtSigner::class, JwtConfig::class)

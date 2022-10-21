@@ -1,13 +1,13 @@
 package helpers
 
-import com.realworld.springmongo.api.ProfileWrapper
-import com.realworld.springmongo.api.UserWrapper
-import com.realworld.springmongo.api.toUserWrapper
-import com.realworld.springmongo.dto.request.UpdateUserRequest
-import com.realworld.springmongo.dto.request.UserAuthenticationRequest
-import com.realworld.springmongo.dto.request.UserRegistrationRequest
-import com.realworld.springmongo.dto.view.ProfileView
-import com.realworld.springmongo.dto.view.UserView
+import com.realworld.spring.webflux.api.ProfileWrapper
+import com.realworld.spring.webflux.api.UserWrapper
+import com.realworld.spring.webflux.api.toUserWrapper
+import com.realworld.spring.webflux.dto.request.UpdateUserRequest
+import com.realworld.spring.webflux.dto.request.UserAuthenticationRequest
+import com.realworld.spring.webflux.dto.request.UserRegistrationRequest
+import com.realworld.spring.webflux.dto.view.ProfileView
+import com.realworld.spring.webflux.dto.view.UserView
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
 

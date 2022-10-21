@@ -1,13 +1,13 @@
 package helpers
 
-import com.realworld.springmongo.api.ArticleWrapper
-import com.realworld.springmongo.api.CommentWrapper
-import com.realworld.springmongo.api.toArticleWrapper
-import com.realworld.springmongo.api.toCommentWrapper
-import com.realworld.springmongo.dto.request.CreateArticleRequest
-import com.realworld.springmongo.dto.request.CreateCommentRequest
-import com.realworld.springmongo.dto.request.UpdateArticleRequest
-import com.realworld.springmongo.dto.view.*
+import com.realworld.spring.webflux.api.ArticleWrapper
+import com.realworld.spring.webflux.api.CommentWrapper
+import com.realworld.spring.webflux.api.toArticleWrapper
+import com.realworld.spring.webflux.api.toCommentWrapper
+import com.realworld.spring.webflux.dto.request.CreateArticleRequest
+import com.realworld.spring.webflux.dto.request.CreateCommentRequest
+import com.realworld.spring.webflux.dto.request.UpdateArticleRequest
+import com.realworld.spring.webflux.dto.view.*
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
 

@@ -19,8 +19,10 @@ For more information on how to this works with other frontends/backends, head ov
 It uses Kotlin 1.7.20, and Spring Reactive Stack: WebFlux + Spring Data Reactive MongoDB + Spring Data R2DBC (H2).  
 It provides ability to handle concurrency with a small number of threads and scale with fewer hardware resources, with functional developemnt approach.
 - [WebFlux](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html) \
-    NOTE: spring boot 5 webflux uses [Reactor](https://projectreactor.io/docs/core/release/reference/) version 3
-- [MongoDB Reactive](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo.reactive)
+- [MongoDB Reactive](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo.reactive) 
+  - (embedded) mongodb: 3.5.5
+- [r2dbc-h2](https://spring.io/projects/spring-data-r2dbc) 0.9.1
+  - h2: 2.1.210
 
 
 ## Database
