@@ -3,12 +3,18 @@
 > ### Spring boot + WebFlux (Kotlin) + reactive mongodb and r2dbc (H2) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
 
 
-This codebase was created to demonstrate a backend of a fully fledged fullstack application built with **Spring boot + WebFlux (Kotlin) ** including CRUD operations, authentication, and etc.
-This code base uses an unusual setup of the persistenance tier with both reactive mongodb, which represents a suite of non rdbms including cassandra, or gcp firestore and etc., 
-and H2 a traditional relation database that supports reactive operation with r2dbc (reactive to database connector).
-This setup demostrates that relational data base can work side by side with NoSql datastores in a single project. 
-This codebase also demostrates a thing data service layer can detach the project from the details, or differences between these two types of tha data store interface
-with spring data, and allows a project make a delayed decision on which data store solution.  
+This codebase was created to demonstrate a backend of a fully fledged fullstack application built with 
+**Spring boot + WebFlux (Kotlin) ** including CRUD operations, authentication, and etc.
+
+This codebase intentionally uses an "unusual" setup of the persistenance tier with both reactive mongodb, and r2dbc over 
+H2 for reactive relational database. This setup demostrates that spring webflux can work well with both 
+__reactive nosql datastore__, such as mongodb, cassandra, gcp firestore and etc., and __"traditional" relation database__, 
+such as h2, mySql, oracle, with the help of r2dbc (reactive to database connector). _And these two datastore technologies
+works "peacefully" side by side in a single project module_.  :grin:
+
+An application of this setup demostrates that the project can have a delayed decision on the kind of the datastore solution 
+for the project. The data service layer makes the transition to either direction "relatively" painless -- the "pain", or 
+work, is strictly within the persistence tier alone.  
 
 We've gone to great lengths to adhere to the **Spring boot + WebFlux (Kotlin) ** community style guides & best practices.
 
@@ -18,7 +24,7 @@ For more information on how to this works with other frontends/backends, head ov
 # How it works
 It uses Kotlin 1.7.20, and Spring Reactive Stack: WebFlux + Spring Data Reactive MongoDB + Spring Data R2DBC (H2).  
 It provides ability to handle concurrency with a small number of threads and scale with fewer hardware resources, with functional developemnt approach.
-- [WebFlux](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html) \
+- [WebFlux](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html) spring 2.7.2 
 - [MongoDB Reactive](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo.reactive) 
   - (embedded) mongodb: 3.5.5
 - [r2dbc-h2](https://spring.io/projects/spring-data-r2dbc) 0.9.1
@@ -26,7 +32,7 @@ It provides ability to handle concurrency with a small number of threads and sca
 
 
 ## Database
-It uses embedded MongoDB database, and H2 database for demonstration purposes. 
+It uses embedded MongoDB database, and r2dbc-h2 database for demonstration purposes. 
 
 
 ## Basic approach
@@ -46,7 +52,7 @@ The quality & architecture of this Conduit implementation reflect something simi
 ## Tests
 1. Integration tests covers followings, 
 - End to End api tests using test harness covers all the happy paths.
-- Repository test on customized respository impl
+- Repository test on customized repository impl
 - Security
 2. Unit tests utilize spock framework to mock the scenarios that not easily repeatable by Integration test
 - api handlers
