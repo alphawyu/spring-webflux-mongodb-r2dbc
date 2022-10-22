@@ -13,8 +13,7 @@ such as h2, mySql, oracle, with the help of r2dbc (reactive to database connecto
 works "peacefully" side by side in a single project module_.  :grin:
 
 An application of such setup can have a delayed decision on the kind of the datastore solution for the project. The data 
-service layer makes the transition to either direction "relatively" painless -- the "pain", or work, is strictly within 
-the persistence tier alone.  
+service layer makes the transition to either direction "relatively" painless.  
 
 We've gone to great lengths to adhere to the **Spring boot + WebFlux (Kotlin) ** community style guides & best practices.
 
