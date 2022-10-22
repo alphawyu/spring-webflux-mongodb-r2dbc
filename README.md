@@ -6,15 +6,15 @@
 This codebase was created to demonstrate a backend of a fully fledged fullstack application built with 
 **Spring boot + WebFlux (Kotlin) ** including CRUD operations, authentication, and etc.
 
-This codebase intentionally uses an "unusual" setup of the persistenance tier with both reactive mongodb, and r2dbc over 
-H2 for reactive relational database. This setup demostrates that spring webflux can work well with both 
-__reactive nosql datastore__, such as mongodb, cassandra, gcp firestore and etc., and __"traditional" relation database__, 
+This codebase intentionally uses an "unusual" setup of the persistence tier with both reactive mongodb, and r2dbc over 
+H2 for reactive relational database. This setup demonstrates that spring webflux can work well with both 
+__reactive nosql datastore__, such as mongodb, cassandra, gcp firestore and etc., and __"traditional" relational database__, 
 such as h2, mySql, oracle, with the help of r2dbc (reactive to database connector). _And these two datastore technologies
 works "peacefully" side by side in a single project module_.  :grin:
 
-An application of this setup demostrates that the project can have a delayed decision on the kind of the datastore solution 
-for the project. The data service layer makes the transition to either direction "relatively" painless -- the "pain", or 
-work, is strictly within the persistence tier alone.  
+An application of such setup can have a delayed decision on the kind of the datastore solution for the project. The data 
+service layer makes the transition to either direction "relatively" painless -- the "pain", or work, is strictly within 
+the persistence tier alone.  
 
 We've gone to great lengths to adhere to the **Spring boot + WebFlux (Kotlin) ** community style guides & best practices.
 
@@ -23,7 +23,8 @@ For more information on how to this works with other frontends/backends, head ov
 
 # How it works
 It uses Kotlin 1.7.20, and Spring Reactive Stack: WebFlux + Spring Data Reactive MongoDB + Spring Data R2DBC (H2).  
-It provides ability to handle concurrency with a small number of threads and scale with fewer hardware resources, with functional developemnt approach.
+It provides ability to handle concurrency with a small number of threads and scale with fewer hardware resources, with 
+functional development approach.
 - [WebFlux](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html) spring boot 2.7.2 
 - [MongoDB Reactive](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo.reactive) 
   - (embedded) mongodb: 3.5.5 (see application.yml)
@@ -86,5 +87,4 @@ Please fork and PR to improve the project.
 # Credits
 
 Thanks to project [Spring Boot + WebFlux + MongoDB](https://github.com/a-mountain/realworld-spring-webflux) from which 
-this project adopted its code bases of the integration test.
-
+this project adopted its code bases of the integration tests.
