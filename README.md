@@ -41,9 +41,9 @@ The quality & architecture of this Conduit implementation reflect something simi
 
 ## Project structure
 ```
-- api - web layer which contains router function (AppRounter) and handlers (note: spock unit tests).
+- api - the controllers
 - dto - non-persistence tier data structures
-- persistence - includes entities, repositories and a support classes
+- persistence - includes entities, repositories and support classes
 - exceptions - exceptions and exception handlers.
 - security - security settings.
 - service - contains the business logics (note: spock unit tests).
