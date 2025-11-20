@@ -3,6 +3,7 @@ package com.realworld.spring.webflux.security
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
+import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder
 import org.springframework.security.config.web.server.ServerHttpSecurity
@@ -18,22 +19,18 @@ class SecurityConfig {
     fun securityWebFilterChain(
         http: ServerHttpSecurity,
         webFilter: AuthenticationWebFilter?,
-        endpointsConfig: EndpointsSecurityConfig
-    ): SecurityWebFilterChain = http
-        .authorizeExchange()
-        .applyConfig(endpointsConfig)
-        .and()
+        endpointsConfig: Customizer<AuthorizeExchangeSpec>
+    ): SecurityWebFilterChain = http.authorizeExchange(endpointsConfig)
         .addFilterAt(webFilter, SecurityWebFiltersOrder.AUTHENTICATION)
-        .httpBasic().disable()
-        .cors().disable()
-        .csrf().disable()
-        .formLogin().disable()
-        .logout().disable()
-        .build()
-
+        .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
+        .cors(ServerHttpSecurity.CorsSpec::disable)
+        .csrf(ServerHttpSecurity.CsrfSpec::disable)
+        .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
+        .logout(ServerHttpSecurity.LogoutSpec::disable)
+        .build();
 
     @Bean
-    fun endpointsConfig() = EndpointsSecurityConfig { http ->
+    fun endpointsConfig() = Customizer<AuthorizeExchangeSpec> { http ->
         http
             .pathMatchers(HttpMethod.POST, "/api/users", "/api/users/login").permitAll()
             .pathMatchers(HttpMethod.GET, "/api/profiles/**").permitAll()
@@ -41,10 +38,5 @@ class SecurityConfig {
             .pathMatchers(HttpMethod.GET, "/api/tags/**").permitAll()
             .anyExchange().authenticated()
     }
-
-    private fun AuthorizeExchangeSpec.applyConfig(config: EndpointsSecurityConfig) = config.apply(this)
 }
 
-fun interface EndpointsSecurityConfig {
-    fun apply(http: AuthorizeExchangeSpec): AuthorizeExchangeSpec
-}

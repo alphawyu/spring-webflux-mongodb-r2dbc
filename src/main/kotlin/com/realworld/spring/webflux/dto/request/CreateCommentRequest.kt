@@ -1,7 +1,7 @@
 package com.realworld.spring.webflux.dto.request
 
 import com.realworld.spring.webflux.persistence.entity.Comment
-import javax.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotBlank
 
 data class CreateCommentRequest(
     @field:NotBlank

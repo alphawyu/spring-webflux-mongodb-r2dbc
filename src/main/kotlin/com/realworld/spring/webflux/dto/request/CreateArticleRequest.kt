@@ -2,7 +2,7 @@ package com.realworld.spring.webflux.dto.request
 
 import com.realworld.spring.webflux.dto.Article
 import com.realworld.spring.webflux.persistence.entity.ArticleEntity
-import javax.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotBlank
 
 data class CreateArticleRequest(
     @field:NotBlank

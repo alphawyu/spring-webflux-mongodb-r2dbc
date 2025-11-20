@@ -1,11 +1,8 @@
 package com.realworld.spring.webflux.persistence.entity
 
 import com.realworld.spring.webflux.dto.User
-import org.apache.commons.lang3.StringUtils
 import org.springframework.data.annotation.Id
-import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
-import java.util.*
 
 @Table("app_user")
 data class UserEntity(

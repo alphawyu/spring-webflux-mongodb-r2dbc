@@ -4,9 +4,6 @@ import com.realworld.spring.webflux.dto.User
 import com.realworld.spring.webflux.exceptions.InvalidRequestException
 import com.realworld.spring.webflux.persistence.entity.ArticleEntity
 import com.realworld.spring.webflux.persistence.entity.UserEntity
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.stereotype.Component
@@ -33,9 +30,9 @@ class UserDataService(
         return toUser(userEntity = userEntity)
     }
 
-    suspend fun existsByEmail(email: String) = userRepository.existsByEmail(email)
+    fun existsByEmail(email: String) = userRepository.existsByEmail(email)
 
-    suspend fun existsByUsername(username: String) = userRepository.existsByUsername(username)
+    fun existsByUsername(username: String) = userRepository.existsByUsername(username)
 
     suspend fun findByUsername(username: String): User? {
         val userEntity = userRepository.findByUsername(username).awaitSingleOrNull()

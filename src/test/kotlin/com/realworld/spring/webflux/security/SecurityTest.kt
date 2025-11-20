@@ -1,24 +1,30 @@
 package com.realworld.spring.webflux.security
 
 import helpers.ImportAppSecurity
-import helpers.authorizationToken
+import helpers.SupportTestConfig
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
 import org.springframework.http.HttpStatus
+import org.springframework.security.config.Customizer
+import org.springframework.security.config.web.server.ServerHttpSecurity.AuthorizeExchangeSpec
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
+import org.springframework.test.context.ContextConfiguration;
 
 @WebFluxTest(controllers = [SecurityTest.TestController::class])
+@ContextConfiguration(classes = [SupportTestConfig::class])
 @ImportAppSecurity
+@Import(SecurityTest.Configuration::class,)
 internal class SecurityTest(
     @Autowired val client: WebTestClient,
     @Autowired val signer: JwtSigner,
@@ -52,7 +58,7 @@ internal class SecurityTest(
         val token = signer.generateToken(userId)
         val result = client.get()
             .uri("/authenticated")
-            .authorizationToken(token)
+            .header("Authorization", "Token $token")
             .exchange()
             .expectBody(TokenPrincipal::class.java)
             .returnResult()
@@ -64,20 +70,20 @@ internal class SecurityTest(
     }
 
     @TestConfiguration
-    class Configuration {
+    internal class Configuration {
         @Bean
         fun testController() = TestController()
 
         @Bean
         @Primary
-        fun testEndpointsConfig() = EndpointsSecurityConfig { http ->
+        fun testEndpointsConfig() = Customizer<AuthorizeExchangeSpec> { http ->
             http.pathMatchers("/permitAll").permitAll()
                 .pathMatchers("/authenticated").authenticated()
         }
     }
 
     @RestController
-    class TestController {
+    internal class TestController {
         @GetMapping("/authenticated")
         fun token(@AuthenticationPrincipal principalMono: Mono<TokenPrincipal>): Mono<TokenPrincipal> {
             return principalMono

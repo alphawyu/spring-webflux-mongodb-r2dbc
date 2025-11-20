@@ -2,7 +2,6 @@ package com.realworld.spring.webflux.dto.view
 
 import com.realworld.spring.webflux.dto.User
 import com.realworld.spring.webflux.persistence.entity.Comment
-import com.realworld.spring.webflux.persistence.entity.UserEntity
 import java.time.Instant
 
 data class CommentView(

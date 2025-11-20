@@ -1,56 +1,92 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    id("org.springframework.boot") version "2.7.2"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.7.20"
-    kotlin("plugin.spring") version "1.7.20"
+    id("org.springframework.boot") version "3.5.6"
+    id("io.spring.dependency-management") version "1.1.7"
+    // NOTE: kotlin 2.3.0 that supports java 25 will be release around the end of 2025
+    kotlin("jvm") version "2.3.0-Beta2"
+    kotlin("plugin.spring") version "2.3.0-Beta2"
+    id("org.jetbrains.kotlinx.kover") version "0.9.3"
 }
 
 group = "com.realworld"
-version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+version = "0.1.0"
 
-repositories {
-    mavenCentral()
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(25))
+    }
 }
 
+kotlin {
+    jvmToolchain(25)
+    compilerOptions {
+        optIn.add("kotlin.RequiresOptIn")
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:3.5.6")
+    }
+}
+    
 dependencies {
+    // spring boot starter
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-
-    implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
-
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-    implementation("io.r2dbc:r2dbc-h2:0.9.1.RELEASE")
-    implementation("com.h2database:h2:2.1.210")
 
-    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
+    // embedded mongodb
+    implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring3x:4.21.0")
+    implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.21.0")
 
+    // h2
+    implementation("io.r2dbc:r2dbc-h2:1.1.0.RELEASE")
+    implementation("com.h2database:h2:2.4.240")
+
+    // JWT
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
+    // kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
-    testImplementation("io.mockk:mockk:1.12.0")
+    // Testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.security:spring-security-test")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
-}
+    testImplementation("io.projectreactor:reactor-test")
+    testImplementation("io.mockk:mockk:1.14.6")
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
+//    testImplementation(kotlin("test"))
+//    testImplementation(kotlin("test-junit"))
+    testImplementation("org.jetbrains.kotlin:kotlin-test:2.3.0-Beta2") // Or a compatible stable version
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.3.0-Beta2") // Or a compatible stable version
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.0")
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "16"
-    }
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+kover {
+    reports {
+        filters {
+            excludes {
+                classes("com.realworld.spring.webflux.SpringWebfluxKtApplicationKt",
+                    "*\$suspendImpl\$\$inlined\$awaitBody\$1",
+                    "*\$suspendImpl\$\$inlined\$map\$*"
+                )
+            }
+        }
+    }
+}
+
