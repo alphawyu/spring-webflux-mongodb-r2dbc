@@ -53,9 +53,12 @@ The quality & architecture of this Conduit implementation reflect something simi
 
 # Getting started
 
-Prerequisite: java 25+ for gradle 9
+Prerequisite: java 25+ for gradle 9. 
+Please configure JAVA_HOME environment variable or set org.gradle.java.home in gradle.properties file
 
 NOTE: spring 3 requires gradle 8. So it is possible to run the app with java 21 with some changes
+
+This app is verified working with ubuntu 24 and windows 10.
 
 * to build
   - `./gradlew clean build` 
