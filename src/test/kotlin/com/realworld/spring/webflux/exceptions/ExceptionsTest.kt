@@ -2,6 +2,7 @@ package com.realworld.spring.webflux.exceptions
 
 import com.realworld.spring.webflux.validation.LocaleConfigurer
 import com.realworld.spring.webflux.validation.NotBlankOrNull
+import helpers.SupportTestConfig
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration
@@ -14,15 +15,17 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import javax.validation.Valid
-import javax.validation.constraints.Email
-import javax.validation.constraints.NotBlank
+import jakarta.validation.Valid
+import jakarta.validation.constraints.Email
+import jakarta.validation.constraints.NotBlank
+import org.springframework.test.context.ContextConfiguration
 
 @WebFluxTest(
     controllers = [ExceptionsTest.Controller::class],
     excludeAutoConfiguration = [ReactiveSecurityAutoConfiguration::class]
 )
-@Import(LocaleConfigurer::class, ExceptionsTest.Controller::class)
+@ContextConfiguration(classes = [SupportTestConfig::class])
+@Import(LocaleConfigurer::class, ExceptionsTest.Controller::class, GlobalControllerAdvice::class)
 internal class ExceptionsTest(
     @Autowired val client: WebTestClient,
 ) {

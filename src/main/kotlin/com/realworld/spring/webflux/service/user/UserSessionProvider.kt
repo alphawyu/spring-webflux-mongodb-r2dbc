@@ -3,9 +3,7 @@ package com.realworld.spring.webflux.user
 import com.realworld.spring.webflux.exceptions.InvalidRequestException
 import com.realworld.spring.webflux.dto.User
 import com.realworld.spring.webflux.persistence.repository.UserDataService
-import com.realworld.spring.webflux.persistence.repository.UserRepository
 import com.realworld.spring.webflux.security.TokenPrincipal
-import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.security.core.context.ReactiveSecurityContextHolder
 import org.springframework.stereotype.Component

@@ -24,15 +24,16 @@ For more information on how to this works with other frontends/backends, head ov
 It uses Kotlin 1.7.20, and Spring Reactive Stack: WebFlux + Spring Data Reactive MongoDB + Spring Data R2DBC (H2).  
 It provides ability to handle concurrency with a small number of threads and scale with fewer hardware resources, with 
 functional development approach.
-- [WebFlux](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html) spring boot 2.7.2 
+- [WebFlux](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html) spring boot 3.5.6 
 - [MongoDB Reactive](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo.reactive) 
-  - (embedded) mongodb: 3.5.5 (see application.yml)
-- [r2dbc-h2](https://spring.io/projects/spring-data-r2dbc) 0.9.1
+  - embedded mongodb: 4.21.0 for mongodb 6.0.5+ (see application.yml) 
+    + NOTE: new linux distribution, eg. ubuntu 22+, requires mongodb 6.0.4+, due to the libssl dependency
+  - the datastore solution for 'user' domain 
+- [r2dbc-h2](https://spring.io/projects/spring-data-r2dbc) 1.0.0.RELEASE
   - h2: 2.1.210 (see build.gradle.kt)
+  - the datastore solution for 'article' domain
 
-
-## Database
-It uses embedded MongoDB database, and r2dbc-h2 database for demonstration purposes. 
+This project Uses a hybrid data store solution to demonstrate the localized the data storage, which is a desirable microservice architecture.
 
 
 ## Basic approach
@@ -41,7 +42,7 @@ The quality & architecture of this Conduit implementation reflect something simi
 
 ## Project structure
 ```
-- api - the controllers
+- api - the router and handler
 - dto - non-persistence tier data structures
 - persistence - includes entities, repositories and support classes
 - exceptions - exceptions and exception handlers.
@@ -49,41 +50,69 @@ The quality & architecture of this Conduit implementation reflect something simi
 - service - contains the business logics (note: spock unit tests).
 - validation - custom validators and validation settings.
 ```
-## Tests
-1. Integration tests covers followings, 
-- End to End api tests using test harness covers all the happy paths.
-- Repository test on customized repository impl
-- Security
-2. Unit tests utilize spock framework to mock the scenarios that not easily repeatable by Integration test
-- api handlers
-- services
-
 
 # Getting started
-You need JAVA 17 installed.
-* to build `./gradlew clean build`
-* to run `./gradlew booRun`
-  * run in debug mode `./gradlew bootRun --debug-JVM`, and attach the debugger to the spring boot process
 
-To test that it works, open a browser tab at http://localhost:8080/api/tags .  
-Alternatively, you can run
-```
-curl http://localhost:8080/api/tags
-```
+Prerequisite: java 25+ for gradle 9
 
-# Run test
+NOTE: spring 3 requires gradle 8. So it is possible to run the app with java 21 with some changes
 
-The repository contains a lot of test cases to cover both api test and repository test.
+* to build
+  - `./gradlew clean build` 
+* to run 
+  - `./gradlew booRun`
+  - run in debug mode `./gradlew bootRun --debug-JVM`, and attach the debugger to the spring boot process
 
+When following appears in th log, you can test run the app
+```declarative
+ Netty started on port 8080 (http)`
 ```
-./gradlew test
-```
+and view with a browser at http://localhost:8080/api/tags , or with cli `curl http://localhost:8080/api/tags`
+
+For a more comprehensive tour of the app, use "real world" postman collection, [Conduit.postman_collection.json](src/test/resources/Conduit.postman_collection.json), in the test/resources folder, 
+or online at [github.com/gothinkster/realworld](https://github.com/gothinkster/realworld/blob/main/api/Conduit.postman_collection.json)
+and view the [api document at docs.realworld.show](https://docs.realworld.show/specifications/backend/api-response-format/)
+
+# Tests (troubleshooting)
+In case, the app does not work as expected by [Getting Started](#getting-started) due to any kind of reason. 
+You can 
+1. check with the test for the troubleshooting, if you don't want wait
+2. report the issue to the [project](https://github.com/alphawyu/spring-webflux-mongodb-r2dbc/issues). Normally, I check the issues weekly.
+   1. please include a description of the issue
+   2. the relevant logs (test logs if possible)
+   3. your runtime environment, such as OS version, java version
+3. [email alphawy@hotmail.com, with subject=subject=spring-web-mongodb-r2dbc](mailto:alphawy@hotmail.com?subject=spring-web-mongodb-r2dbc). I check the email every couple days. 
+
+There are two types of tests,
+* Integration tests covers followings,
+    - End to End api tests using test harness covers all the happy paths.
+    - Repository test on customized repository impl
+    - Security
+* Unit tests use junit5 + [mockk](https://mockk.io/) for the scenarios that is not easily repeatable,
+    - api handlers
+    - services
+    - security 
+
+This project uses [kover](https://github.com/Kotlin/kotlinx-kover) for the test coverage
+
+Check the logs from the tests as well as the test result 
+  
+## Run test 
+
+* `./gradlew test`, generate test report but no coverage report
+* to test with coverage `./gradlew koverHtmlReport` 
+
+NOTE: kover updates coverage report only when `/gradlew test` can complete successfully
+
+[see QnA.md for more details](QnA.md#test-reports)
 
 # Help
 
 Please fork and PR to improve the project.
+For feedbacks, please open an [issue](https://github.com/alphawyu/spring-webflux-mongodb-r2dbc/issues) to the repo, 
+or [email alphawy@hotmail.com](mailto:alphawy@hotmail.com?subject=spring-web-mongodb-r2dbc), with subject=subject=spring-web-mongodb-r2dbc
 
 # Credits
 
-Thanks to project [Spring Boot + WebFlux + MongoDB](https://github.com/a-mountain/realworld-spring-webflux) from which 
-this project adopted its code bases of the integration tests.
+Thanks to project [Spring Boot + WebFlux + MongoDB](https://github.com/a-mountain/realworld-spring-webflux-kt).  
+This project adopted its code bases for the integration tests.

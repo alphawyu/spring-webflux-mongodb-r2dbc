@@ -3,7 +3,6 @@ package com.realworld.spring.webflux.dto.view
 import com.realworld.spring.webflux.dto.Article
 import com.realworld.spring.webflux.dto.User
 import com.realworld.spring.webflux.persistence.entity.ArticleEntity
-import com.realworld.spring.webflux.persistence.entity.UserEntity
 import java.time.Instant
 
 data class ArticleView(

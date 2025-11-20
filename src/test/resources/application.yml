@@ -6,9 +6,8 @@ logging:
 #    io.r2dbc.h2.QUERY: DEBUG
 #    io.r2dbc.h2.PARAM: DEBUG
 #    io.r2dbc: DEBUG
-
 spring:
   data.mongodb.auto-index-creation: true
   r2dbc.initialization-mode: always
-# since spring boot 3, mongodb.embedded.version is replaced with de.flapdoodle.mongodb.embedded.version
+  # mongodb.embedded.version: 3.5.5
 de.flapdoodle.mongodb.embedded.version: 6.0.5

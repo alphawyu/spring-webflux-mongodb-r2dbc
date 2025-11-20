@@ -1,9 +1,8 @@
 package com.realworld.spring.webflux.dto.request
 
 import com.realworld.spring.webflux.dto.User
-import com.realworld.spring.webflux.persistence.entity.UserEntity
-import javax.validation.constraints.Email
-import javax.validation.constraints.NotBlank
+import jakarta.validation.constraints.Email
+import jakarta.validation.constraints.NotBlank
 
 data class UserRegistrationRequest(
     @field:NotBlank

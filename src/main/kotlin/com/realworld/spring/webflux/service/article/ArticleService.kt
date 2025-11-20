@@ -23,7 +23,6 @@ class ArticleService(
     private val tagRepository: TagRepository,
     private val userDataService: UserDataService,
 ) {
-
     suspend fun createArticle(request: CreateArticleRequest, author: User): ArticleView {
 
         val newSlug = Article.toSlug(request.title)

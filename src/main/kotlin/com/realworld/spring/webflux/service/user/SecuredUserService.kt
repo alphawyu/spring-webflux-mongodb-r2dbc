@@ -55,7 +55,7 @@ class SecuredUserService(
     }
 
     private suspend fun resolveUsername(user: User, newUsername: String?): String {
-        if (newUsername == null || newUsername.isEmpty()) {
+        if (newUsername.isNullOrBlank()) {
             return user.username
         }
         if (user.username == newUsername) {
@@ -68,7 +68,7 @@ class SecuredUserService(
     }
 
     private suspend fun resolveEmail(user: User, newEmail: String?): String {
-        if (newEmail == null || newEmail.isEmpty()) {
+        if (newEmail.isNullOrBlank()) {
             return user.email
         }
         if (user.email == newEmail) {
