@@ -1,9 +1,8 @@
 plugins {
     id("org.springframework.boot") version "3.5.6"
     id("io.spring.dependency-management") version "1.1.7"
-    // NOTE: kotlin 2.3.0 that supports java 25 will be release around the end of 2025
-    kotlin("jvm") version "2.3.0-Beta2"
-    kotlin("plugin.spring") version "2.3.0-Beta2"
+    kotlin("jvm") version "2.3.0"
+    kotlin("plugin.spring") version "2.3.0"
     id("org.jetbrains.kotlinx.kover") version "0.9.3"
 }
 
